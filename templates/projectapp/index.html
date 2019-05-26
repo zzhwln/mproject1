@@ -389,59 +389,30 @@
           <div  id="con_two_1" style="display:block;" >
             <ul class="list01">
                 {% for fe in etable %}
-                   {{ fe.id }}
+                    {% if forloop.counter <= 3 %}
+                           <li class="active"> <span class="num num1"> {{ forloop.counter }}</span>
+                <div> <a class="list_name" href="{% url 'projectapp:bookdetails' %}?id={{ fe.id }}">{{ fe.b_name }}</a>
+                  <dl class="list_con clearfix">
+                    <dt><a href="{% url 'projectapp:bookdetails' %}?id={{ fe.id }}"><img src="{% static fe.pic %}" /></a></dt>
+                    <dd>
+                      <p class="name"><a href="{% url 'projectapp:bookdetails' %}?id={{ fe.id }}">{{ fe.b_name }}</a></p>
+                      <b>￥{{ fe.pricing }}</b><em>￥{{ fe.d_pricing }}</em><a class="pl" href="#">112条评论</a></dd>
+                  </dl>
+                </div>
+              </li>
+                    {% endif %}
 
+               <li class="active"> <span class="num num1"> {{ forloop.counter }}</span>
+                <div> <a class="list_name" href="{% url 'projectapp:bookdetails' %}?id={{ fe.id }}">{{ fe.b_name }}</a>
+                  <dl class="list_con clearfix">
+                    <dt><a href="{% url 'projectapp:bookdetails' %}?id={{ fe.id }}"><img src="{% static fe.pic %}" /></a></dt>
+                    <dd>
+                      <p class="name"><a href="{% url 'projectapp:bookdetails' %}?id={{ fe.id }}">{{ fe.b_name }}</a></p>
+                      <b>￥{{ fe.pricing }}</b><em>￥{{ fe.d_pricing }}</em><a class="pl" href="#">112条评论</a></dd>
+                  </dl>
+                </div>
+              </li>
                 {% endfor %}
-                <li class="active"> <span class="num num1">1</span>
-                <div> <a class="list_name" href="">巨婴国：武志红2016年新书力作</a>
-                  <dl class="list_con clearfix">
-                    <dt><a href=""><img src="../../static/images/22539560-1_l_1.jpg" /></a></dt>
-                    <dd>
-                      <p class="name"><a href="#">巨婴国：武志红2016年新书力作</a></p>
-                      <b>￥45.40</b><em>￥45.40</em><a class="pl" href="#">112条评论</a></dd>
-                  </dl>
-                </div>
-              </li>
-              <li> <span class="num num1">2</span>
-                <div> <a class="list_name" href="">巨婴国：武志红2016年新书力作</a>
-                  <dl class="list_con clearfix">
-                    <dt><a href=""><img src="../../static/images/22539560-1_l_1.jpg" /></a></dt>
-                    <dd>
-                      <p class="name"><a href="#">巨婴国：武志红2016年新书力作</a></p>
-                      <b>￥45.40</b><em>￥45.40</em><a class="pl" href="#">112条评论</a></dd>
-                  </dl>
-                </div>
-              </li>
-              <li> <span class="num num1">3</span>
-                <div> <a class="list_name" href="">巨婴国：武志红2016年新书力作</a>
-                  <dl class="list_con clearfix">
-                    <dt><a href=""><img src="../../static/images/22539560-1_l_1.jpg" /></a></dt>
-                    <dd>
-                      <p class="name"><a href="#">巨婴国：武志红2016年新书力作</a></p>
-                      <b>￥45.40</b><em>￥45.40</em><a class="pl" href="#">112条评论</a></dd>
-                  </dl>
-                </div>
-              </li>
-              <li> <span class="num">4</span>
-                <div> <a class="list_name" href="">巨婴国：武志红2016年新书力作</a>
-                  <dl class="list_con clearfix">
-                    <dt><a href=""><img src="../../static/images/22539560-1_l_1.jpg" /></a></dt>
-                    <dd>
-                      <p class="name"><a href="#">巨婴国：武志红2016年新书力作</a></p>
-                      <b>￥45.40</b><em>￥45.40</em><a class="pl" href="#">112条评论</a></dd>
-                  </dl>
-                </div>
-              </li>
-              <li> <span class="num">5</span>
-                <div> <a class="list_name" href="">巨婴国：武志红2016年新书力作</a>
-                  <dl class="list_con clearfix">
-                    <dt><a href=""><img src="../../static/images/22539560-1_l_1.jpg" /></a></dt>
-                    <dd>
-                      <p class="name"><a href="#">巨婴国：武志红2016年新书力作</a></p>
-                      <b>￥45.40</b><em>￥45.40</em><a class="pl" href="#">112条评论</a></dd>
-                  </dl>
-                </div>
-              </li>
             </ul>
           </div>
           <a href="#" target="_blank" title="查看完整榜单>>" class="more_top" ddt-pit="text_1" ddt-src="http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-recent7-0-0-1-1"> 查看完整榜单&gt;&gt; </a> </div>

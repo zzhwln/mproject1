@@ -19,10 +19,10 @@
 <div id="tools">
 <div class="tools">
     <div class="ddnewhead_operate" dd_name="顶链接">
-                                  {% if  nickname %}
+        {% if  checkname %}
            <div class="ddnewhead_welcome" display="none;">
             <span id="nickname">
-                <span class="hi hi_none">登录成功欢迎光临当当:{{ nickname }}</span>
+                <span class="hi hi_none">登录成功欢迎光临当当:{{ checkname }}</span>
 {#                <a href="https://login.dangdang.com/signin.aspx?returnurl=http%3A//www.dangdang.com/" class="login_link">登录</a>#}
                 <a href="{% url 'projectapp:index' %}?nickname=1" class="login_link">退出</a>
             </span>
@@ -91,7 +91,38 @@
                 
                 
                 </div>
-                <div class="pay-normal" id="order_list"> <div class="item-order"><h3>订单：<a href="http://order.dangdang.com/orderdetails.aspx?orderid=34673930343" target="_blank"><span class="number">34673930343</span></a></h3><div class="cont minh-40"><table cellpadding="0" cellspacing="0">	 		<tbody><tr><td width="53"></td><td>		<span class="popup-Details spd">1件商品<i class="icon icon-details"></i><div class="popup-wrap popup-orderEnd-detail" style="right:-288px; top:12px;display:none;"><div class="popup-cont">		 			<p><span class="span-w230">活着（余华经典著作）</span><strong class="color-orange">x1</strong></p>				</div></div></span>			    	        <div class="popup-wrap popup-orderEnd-detail" style="right:-288px; top:12px;display:none;"><div class="popup-cont">			 				<p><span class="span-w230">活着（余华经典著作）</span><strong class="color-orange">x1</strong></p>			</div></div><span>送给</span><span class="popup-Details spd">郭雅雪<i class="icon icon-details"></i><div class="popup-wrap popup-orderEnd-detail" style="right:-288px; top:12px;display:none;"><div class="popup-cont"><p>中国 北京 北京市 海淀区 西二旗铭科苑小区十一号楼二单元601 100019</p><p>电话：15901551248</p></div></div></span><span>配送方为</span><span>当当网</span>   		</td></tr>							<tr class="hackie6"><td>&nbsp;</td></tr>					</tbody></table></div>					<div class="order-price"><p>支付金额：<span class="price-d">¥15.00</span>        </p><p class="p-hdfk">货到付款</p></div>					<div class="itemtext"><span class="color-red">安全提醒：</span>当当平台及销售商不会以订单异常、系统升级等理由，通过任何方式发送给您退款链接。请您谨防<span class="color-red">钓鱼链接或诈骗电话</span>！</div></div></div>
+                <div class="pay-normal" id="order_list"> <div class="item-order">
+                    <h3>订单：<a href="http://order.dangdang.com/orderdetails.aspx?orderid=34673930343" target="_blank">
+                        <span class="number">{{ ma }}</span></a>
+                    </h3>
+                    <div class="cont minh-40">
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody><tr><td width="53"></td><td>
+                                <span class="popup-Details spd">{{ bumber }}件商品<i class="icon icon-details"></i>
+                                    <div class="popup-wrap popup-orderEnd-detail" style="right:-288px; top:12px;display:none;"><div class="popup-cont">
+                                        <p><span class="span-w230">活着（余华经典著作）</span><strong class="color-orange">x1</strong></p>
+                                    </div></div>
+                                </span>
+                                <div class="popup-wrap popup-orderEnd-detail" style="right:-288px; top:12px;display:none;">
+                                    <div class="popup-cont">
+                                        <p><span class="span-w230">活着（余华经典著作）</span><strong class="color-orange">x1</strong></p>
+                                    </div></div>
+                                <span>送给</span><span class="popup-Details spd">{{ checkname }}<i class="icon icon-details"></i>
+                                <div class="popup-wrap popup-orderEnd-detail" style="right:-288px; top:12px;display:none;"><div class="popup-cont">
+                                    <p>中国 北京 北京市 海淀区 西二旗铭科苑小区十一号楼二单元601 100019</p>
+                                    <p>电话：15901551248</p></div></div></span>
+                                <span>配送方为</span><span>当当网</span>
+                            </td>
+                            </tr>
+                            <tr class="hackie6"><td>&nbsp;</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="order-price">
+                        <p>支付金额：<span class="price-d">¥{{ money }}</span>        </p>
+                        <p class="p-hdfk">货到付款</p></div>
+                    <div class="itemtext"><span class="color-red">安全提醒：</span>
+                        当当平台及销售商不会以订单异常、系统升级等理由，通过任何方式发送给您退款链接。请您谨防<span class="color-red">钓鱼链接或诈骗电话</span>！</div></div></div>
                 
                 <div class="item-order item-order-payment" id="error_prompt" style="display:none;"> <!-- 需要隐藏，添加hide类即可 -->
                     <div class="tips-pay">

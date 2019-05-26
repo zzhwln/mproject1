@@ -158,7 +158,7 @@
                             <tbody data-stock="22388" data-offline="false" data-productid="24147882" data-timestamp="1484488454000" data-orderforspupormo="0">
                        {% if data != '' %}
                            {% for datum in data %}
-                                {% if datum.zt != '' %}
+                                {% if datum.zt == '1' %}
                                     <tr id="tr_424893864" class="  ">
                                          <td class="row1"> <a href="javascript:void(0)" data-item="424893864" class="fn-product-check checknow check_on">选中</a> </td>
                                            <td class="row_img">
@@ -259,7 +259,7 @@
                     <tbody data-stock="22388" data-offline="false" data-productid="24147882" data-timestamp="1484488454000" data-orderforspupormo="0">
                     {% if data != '' %}
                         {% for datum in data %}
-                        {% if datum.zt == '' %}
+                        {% if datum.zt == '0' %}
                             <tr id="tr_424893864" class="  ">
                                  <td class="row1"> <a href="javascript:void(0)" data-item="424893864" class="fn-product-check checknow check_on">选中</a> </td>
                                    <td class="row_img">

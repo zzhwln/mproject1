@@ -370,10 +370,13 @@ def login1(request):
     txtPassword=request.POST.get('txtPassword')
     txtUsername=request.POST.get('txtUsername')
     print('379',txtUsername,txtPassword)
-    fs=TUser.objects.filter(nickname=txtUsername,password=txtPassword)
-    for i in fs:
-        aass=i.aass
-        print(aass,type(aass))
+    fs=TUser.objects.get(nickname=txtUsername,password=txtPassword)
+    aass=request.session.get('aass')
+    fs.aass=aass
+    fs.save()
+    # for i in fs:
+    #     aass=i.aass
+    #     print(aass,type(aass))
     print(type(fs),aass,'375')
     dindent=request.session.get('dizhi')
     print(dindent,'379')
@@ -435,13 +438,12 @@ def mobilem(request):
     mobile = request.GET.get('mobile')
     print(mobile, '417')
     mobile1 = request.session.get('mobile')
+    print(mobile1,'438')
     if mobile == mobile1:
-        request.session['mobile'] = '12'
         request.session['aass'] = '1'
         return HttpResponse('ok')
     else:
         request.session['aass'] = '0'
-        request.session['mobile1'] = '1'
         return HttpResponse('no')
 def register1(request):
     # mobile1 = request.session.get('mobile1')
@@ -454,9 +456,9 @@ def register1(request):
     username=request.POST.get('username')
     txt_repassword=request.POST.get('txt_repassword')
     fs=TUser.objects.filter(email=txt_username)
-    # if fs:
-    #     return HttpResponse('注册失败邮箱已存在！')
-    #
+    if fs:
+        return HttpResponse('注册失败邮箱已存在！')
+
     TUser.objects.create(email=txt_username,nickname=username,password=txt_repassword,aass=aass)
     print(txt_repassword,username,txt_username,'425')
     dindent = request.session.get('dizhi')
@@ -522,7 +524,7 @@ def shopcart (request):
             bpic = str(table.pic)
             bdpri = table.d_pricing
             bpri = table.pricing
-            zt = 1
+            zt = '1'
             bsum = bsum
             li1 = {'id': id, 'bname': bname, 'bpic': bpic, 'bdpri': bdpri, 'bpri': bpri, 'zt': zt, 'bsum': bsum}
             shop.append(li1)
@@ -539,7 +541,7 @@ def shopcart (request):
         bpic = str(table.pic)
         bdpri = table.d_pricing
         bpri = table.pricing
-        zt = 1
+        zt = '1'
         bsum = bsum
         li1 = {'id': id, 'bname': bname, 'bpic': bpic, 'bdpri': bdpri, 'bpri': bpri, 'zt': zt, 'bsum': bsum}
         shop.append(li1)
@@ -557,21 +559,25 @@ def car(request):
     sum=0
     jsum=0
     print(sdel,type(sdel))
+    print(recover,type(recover))
+
     if data != None:
         for i in data:
             if sdel == i['id']:
                 print(535)
-                i['zt'] = ''
+                i['zt'] = '0'
+                data[b] = i
+            if recover==str(i['id']):
+                print('573')
+                i['zt'] = '1'
                 data[b] = i
             if i['bsum']:
-                if i['zt']==1:
+                if i['zt']=='1':
                     sum+=int(i['bdpri'])*int(i['bsum'])
                     aa= int(i['bdpri'])*int(i['bsum'])
                     i['bpri']=str(aa)
                     jsum+=(int(i['bpri'])*int(i['bsum'])-int(i['bdpri'])*int(i['bsum']))
-            elif recover==i['id']:
-                i['zt'] = 1
-                data[b] = i
+
             request.session['shopca'] = data
             b+=1
     request.session['shopca'] =data
@@ -605,10 +611,13 @@ def indent(request):
             return redirect('projectapp:login')
     else:
         return redirect('projectapp:index')
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
 
 
 
 def indentok(request):
+    nickname = request.session.get('nickname1')
     uname=request.session.get('nickname1')
     print(uname,'594')
     if uname:
@@ -635,8 +644,9 @@ def indentok(request):
             # save()
             username.tindent_set.create( column_12=column_12,state=state,bumber=bumber,money=money,tradename=tradename,makeprice=makeprice)
             # print(re,'605')
-    nickname = request.session.get('nickname1')
-    return render(request,'projectapp/indent ok.html',{'nickname':nickname})
+            ma = id_generator()
+
+    return render(request,'projectapp/indent ok.html',{'ma':ma,'checkname':nickname,'checkname':nickname,'money':money,'bumber':bumber})
 def add(request):
     id=request.GET.get('id')
     b=0
@@ -704,8 +714,6 @@ def carcheck(request):
         b+=1
     return JsonResponse({'bsum':num,'sum':sum,'asum':asum})
 """随机获取字符串"""
-def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
 
 
 def mail(request):
@@ -716,5 +724,5 @@ def mail(request):
         ma=id_generator()
         request.session['mobile']=ma
         c=sendmail(ma,a)
-        print(c)
+        print('11')
     return HttpResponse(123)
