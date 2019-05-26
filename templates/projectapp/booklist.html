@@ -579,7 +579,7 @@
             {% for fpage in fl %}
 
              <li class="line1" id="23668351">
-                <div class="inner"> <a title=" {{ fpage.b_name }} " class="pic" href="{% url 'projectapp:bookdetails' %}?id={{ fpage.id }}" target="_blank"><img src="{% static fpage.pic.url %}" alt=" {{ fpage.b_name }}"></a>
+                <div class="inner"> <a title=" {{ fpage.b_name }} " class="pic" href="{% url 'projectapp:bookdetails' %}?id={{ fpage.id }}" target="_blank"><img src="{% static fpage.pic %}" alt=" {{ fpage.b_name }}"></a>
             <p class="name"><a title=" 我与世界只差一个你 " href="{% url 'projectapp:bookdetails' %}?id={{ fpage.id }}" target="_blank"> {{ fpage.b_name }} </a></p>
             <p class="star"><span class="level"><span style="width: 100%;"></span></span><a href="{% url 'projectapp:bookdetails' %}?id={{ fpage.id }}" target="_blank" name="P_pl">163281条评论</a></p>
             <div class="publisher_info">
@@ -650,7 +650,7 @@
          {% else %}
             {% for fpage in page %}
              <li class="line1" id="23668351">
-                <div class="inner"> <a title=" {{ fpage.b_name }} " class="pic" href="{% url 'projectapp:bookdetails' %}?id={{ fpage.id }}" target="_blank"><img src="{% static fpage.pic.url %}" alt=" {{ fpage.b_name }}"></a>
+                <div class="inner"> <a title=" {{ fpage.b_name }} " class="pic" href="{% url 'projectapp:bookdetails' %}?id={{ fpage.id }}" target="_blank"><img src="{% static fpage.pic %}" alt=" {{ fpage.b_name }}"></a>
             <p class="name"><a title=" 我与世界只差一个你 " href="{% url 'projectapp:bookdetails' %}?id={{ fpage.id }}" target="_blank"> {{ fpage.b_name }} </a></p>
             <p class="star"><span class="level"><span style="width: 100%;"></span></span><a href="#" target="_blank" name="P_pl">163281条评论</a></p>
             <div class="publisher_info">

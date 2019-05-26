@@ -21,6 +21,7 @@ urlpatterns = [
    path('bdel/', views.bdel, name='bdel'),
    path('carcheck/', views.carcheck, name='carcheck'),
    path('mail/', views.mail, name='mail'),
+   path('mobilem/', views.mobilem, name='mobilem'),
 
    path('indent/', views.indent, name='indent'),
    path('indentok/', views.indentok, name='indentok'),

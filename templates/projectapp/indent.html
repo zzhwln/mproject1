@@ -83,7 +83,7 @@
 
                 <span class="text fn-select-address">
                     <select  id="province_id" onclick="addcheck()" name="province_id" >
-                    <option value="" >添加新地址</option>
+                    <option value="a" >添加新地址</option>
                   {% for sitef in sitedata %}
                       <option value="{{ sitef.id }}">{{ nickname }}{{ sitef.id }}</option>
 
@@ -126,7 +126,7 @@
         <ul class="shdz_con">
             <p>▪ 收货地址</p>
         	<li><label><strong>*</strong>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</label>
-                <input value="{{ sitfo.addresname }}" placeholder="请填写收货人姓名" type="text" name="ship_man" onblur="check()" id="checkname">
+                <input  value="{{ sitfo.addresname }}" placeholder="请填写收货人姓名" type="text" name="ship_man" onblur="check()" id="checkname">
                 <span id="spn_ship_man" class="hint new_tip"  style="display: block; color: #c30000" ></span></li>
             <li><label><strong>*</strong>收货地址：</label>
                 <input value="{{ sitfo.directin }}" id="addcheckname1" type="text" name="ship_man" onblur="check5()" >
@@ -373,14 +373,20 @@
 
                      checkname=document.getElementById('checkname')
                      checkname.value= data1['Name']
-                     checkname.onfocus='his.blur()'
+                        checkname.readOnly=true
+                     {#checkname.onfocus='his.blur()'#}
                      checkname1=document.getElementById('checkname1')
                      checkname1.value= data1['directin']
+                        checkname1.readOnly=true
+
                      checkname2=document.getElementById('checkname2')
                      checkname2.value= data1['zipcode']
+                        checkname2.readOnly=true
                      cosole.log(data1['zipcode'])
                      checkname3=document.getElementById('checkname3')
                      checkname3.value= data1['mobilephone']
+                        checkname3.readOnly=true
+
                 }
 
                 } else {

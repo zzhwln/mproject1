@@ -186,7 +186,7 @@
         {#                                            </div>#}
 
                                            </td>
-                                           <td class="row4"><span class="red" id="red{{ datum.id }}">¥{{ datum.bdpri }}</span></td>
+                                           <td class="row4"><span class="red" id="red{{ datum.id }}">¥{{ datum.bpri }}</span></td>
                                            <td class="row5 "><span><a href="javascript:void(0)" data-item="424893864" class="fn-add-wish" dd_name="加入收藏按钮">移入收藏</a></span><span><a href="{% url 'projectapp:car' %}?del={{ datum.id }}" data-item="424893864" class="fn-remove-product" dd_name="删除普通品">删除</a></span></td>
                                     </tr>
                                       {% endif %}
@@ -230,7 +230,7 @@
                             <tfoot>
                          <tr class="total"> <td class="row1">&nbsp;</td>
                         <td class="row_img">店铺合计</td> <td colspan="2">&nbsp;</td>
-                        <td colspan="3" class="row4"><span class="red big ooline alignright">¥{{ sum }}</span>
+                        <td colspan="3" class="row4"><span id="asum" class="red big ooline alignright">¥{{ sum }}</span>
                         </td>
                     </tr>
                     </tfoot>
@@ -404,13 +404,19 @@
             success:function (msg) {
                 var c= msg['bsum']
                 var d=msg['sum']
-                console.log(msg['sum'],msg['bsum'])
+                var asum=msg['asum']
+
+                console.log(msg['asum'],msg['bsum'])
                 msg=document.getElementById(a)
                 var d1 = 'red'+a
                 msg1=document.getElementById(d1)
                 {#console.log(msg1,d)#}
                 msg.value= c
                 msg1.innerText= d
+                msgp=document.getElementById('payAmount')
+                msga=document.getElementById('asum')
+                msgp.innerText= asum
+                msga.innerText= asum
              }
         })
 
@@ -425,15 +431,22 @@
             data:{"id":b},
              success:function (msg) {
                  var c= msg['bsum']
-                var d=msg['sum']
-                console.log(msg['sum'],msg['bsum'])
-                msg=document.getElementById(b)
-                var d1 = 'red'+b
-                msg1=document.getElementById(d1)
+                 var d=msg['sum']
+                 var asum=msg['asum']
 
-                console.log(msg1,d)
-                msg.value= c
-                msg1.innerText= d
+                 console.log(msg['sum'],msg['bsum'])
+                 msg=document.getElementById(b)
+                 var d1 = 'red'+b
+                 msg1=document.getElementById(d1)
+
+                 console.log(msg1,d)
+                 msg.value= c
+                 msg1.innerText= d
+
+                 msgp=document.getElementById('payAmount')
+                 msga=document.getElementById('asum')
+                 msgp.innerText= asum
+                 msga.innerText= asum
 
              }
         })
@@ -453,13 +466,21 @@
                 success:function (msg) {
                     var cc= msg['bsum']
                     var d=msg['sum']
-                    console.log(msg['sum'],msg['bsum'])
+                    var asum=msg['asum']
+
+                    console.log(asum,'471')
                     msg=document.getElementById(c)
                     var d1 = 'red'+c
                     msg1=document.getElementById(d1)
+
+                    msgp=document.getElementById('payAmount')
+                    msga=document.getElementById('asum')
+                    msgp.innerText= asum
+                    msga.innerText= asum
                     console.log(msg1,d)
                     msg.value= cc
                     msg1.innerText= d
+
 
              }
         })
@@ -475,11 +496,16 @@
                 success:function (msg) {
                     var cc= msg['bsum']
                     var d=msg['sum']
+                    var asum=msg['asum']
+
                     console.log(msg['sum'],msg['bsum'])
                     msg=document.getElementById(c)
                     var d1 = 'red'+c
                     msg1=document.getElementById(d1)
-
+                    msgp=document.getElementById('payAmount')
+                    msga=document.getElementById('asum')
+                    msgp.innerText= asum
+                    msga.innerText= asum
                     console.log(msg1,d)
                     msg.value= cc
                     msg1.innerText= d

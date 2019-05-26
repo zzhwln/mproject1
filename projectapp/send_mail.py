@@ -6,7 +6,7 @@ def sendmail(b,c):
     send_mail(
         '您的注册邮箱验证码',
         '邮箱验证码：'+b,
-        'yhjhgou@sina.com',
+        '17319366584@sina.cn',
         [c],
         )
     return 'ok'

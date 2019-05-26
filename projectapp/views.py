@@ -371,10 +371,23 @@ def login1(request):
     txtUsername=request.POST.get('txtUsername')
     print('379',txtUsername,txtPassword)
     fs=TUser.objects.filter(nickname=txtUsername,password=txtPassword)
-    if fs:
+    for i in fs:
+        aass=i.aass
+        print(aass,type(aass))
+    print(type(fs),aass,'375')
+    dindent=request.session.get('dizhi')
+    print(dindent,'379')
+    if fs!='' and aass == '1' and dindent == 'a':
+        request.session['nickname']=txtUsername#登录成功存入状态
+        request.session['dizhi'] = ''
+        return redirect('projectapp:indent')
+    elif fs!='' and aass=='1':
+        print()
         request.session['nickname']=txtUsername#登录成功存入状态
         return redirect('projectapp:index')
-    return render(request, 'projectapp/login.html')
+
+    else:
+        return render(request, 'projectapp/login.html')
 
 
 def index(request):
@@ -384,11 +397,16 @@ def index(request):
     if nickname2=='1':
         print(nickname2,'2')
         nickname=''
-        # request.session['nickname']=nickname
+        request.session['nickname']=nickname
     print(nickname,'12312313')
     etwo =TwoClassify.objects.all()
     eone=OneClassify.objects.all()
-    etable=BTable.objects.order_by("pricing","-d_pricing")[0:7]
+    etable=BTable.objects.order_by("pricing","-d_pricing")[0:10]
+    # aa=1
+    # for i in etable:
+    #     etable.create(column_9=aa)
+    #     aa+=1
+    #     print(i.column_9)
     return render(request, 'projectapp/index.html', {"nickname":nickname,"etwo":etwo, "eone": eone,'etable':etable})
 def addd(request):
     return render(request, 'projectapp/addEmp.html')
@@ -412,19 +430,51 @@ def index1(request):
 def register(request):
     nickname = request.session.get('nickname1')
     return render(request,'projectapp/register.html',{'nickname':nickname})
+
+def mobilem(request):
+    mobile = request.GET.get('mobile')
+    print(mobile, '417')
+    mobile1 = request.session.get('mobile')
+    if mobile == mobile1:
+        request.session['mobile'] = '12'
+        request.session['aass'] = '1'
+        return HttpResponse('ok')
+    else:
+        request.session['aass'] = '0'
+        request.session['mobile1'] = '1'
+        return HttpResponse('no')
 def register1(request):
+    # mobile1 = request.session.get('mobile1')
+    aass=request.session.get('aass')
+    print(aass,'434')
+    if aass!='1':
+        aass=='0'
+    # mobile=request.POST.get('mobile')
     txt_username=request.POST.get('txt_username')
     username=request.POST.get('username')
     txt_repassword=request.POST.get('txt_repassword')
     fs=TUser.objects.filter(email=txt_username)
-    if fs:
-        return HttpResponse('注册失败用户名或密码已存在！')
-    TUser.objects.create(email=txt_username,nickname=username,password=txt_repassword)
+    # if fs:
+    #     return HttpResponse('注册失败邮箱已存在！')
+    #
+    TUser.objects.create(email=txt_username,nickname=username,password=txt_repassword,aass=aass)
     print(txt_repassword,username,txt_username,'425')
-    return redirect('projectapp:login')
+    dindent = request.session.get('dizhi')
+    print(dindent, '379')
+    if aass == '1' and dindent == 'a':
+        request.session['nickname1'] = username  # 登录成功存入状态
+        request.session['dizhi'] = ''
+        print(username,aass)
+        return redirect('projectapp:indent')
+    elif aass!='1':
+        return redirect('projectapp:login')
+    request.session['nickname'] = username  # 登录成功存入状态
+    return redirect('projectapp:registerok')
     # return render(request,'projectapp/register ok.html')
+
 def registerok(request):
-    return render(request,'projectapp/register ok.html')
+    nickname=request.session.get('nickname')
+    return render(request,'projectapp/register ok.html',{'nickname':nickname})
 def getcaptc(request):
     image=ImageCaptcha()
     rand_code=random.sample(string.ascii_letters+string.digits,4)
@@ -513,17 +563,18 @@ def car(request):
                 print(535)
                 i['zt'] = ''
                 data[b] = i
-            elif i['zt']==1:
-                sum+=int(i['bdpri'])*int(i['bsum'])
-                jsum+=(int(i['bpri'])*int(i['bsum'])-int(i['bdpri'])*int(i['bsum']))
+            if i['bsum']:
+                if i['zt']==1:
+                    sum+=int(i['bdpri'])*int(i['bsum'])
+                    aa= int(i['bdpri'])*int(i['bsum'])
+                    i['bpri']=str(aa)
+                    jsum+=(int(i['bpri'])*int(i['bsum'])-int(i['bdpri'])*int(i['bsum']))
             elif recover==i['id']:
                 i['zt'] = 1
                 data[b] = i
-
+            request.session['shopca'] = data
             b+=1
-    print(data)
     request.session['shopca'] =data
-  # data=request.session.get('shopca')
     return render(request,'projectapp/car.html',{'nickname':nickname,'data':data,'sum':sum,'jsum':jsum})
 
 
@@ -535,21 +586,30 @@ def indent(request):
     def mydefault(u):
         if isinstance(u,TSite):
             return {"id":u.id,"Name":u.addresname,'directin':u.directin,'zipcode':u.zipcode,'mobilephone':u.mobilephone}
-
     print(siteid,type(siteid))
     """判断是否点击了配送地址"""
     sitedata = TSite.objects.all()
-    if siteid:
-        page = TSite.objects.filter(id=int(siteid))
-        print(page,'599')
-        return JsonResponse({"use": list(page)}, json_dumps_params={"default": mydefault})
-    elif siteid=='':
-        return HttpResponse('')
-        print(siteid,'591')
-    return render(request,'projectapp/indent.html',{'sitedata':sitedata,'siteid':siteid,'nickname':nickname,'data':data})
+    if data:
+        if nickname:
+            if siteid=='a':
+                return HttpResponse('')
+                print(siteid, '591')
+            elif siteid:
+                page = TSite.objects.filter(id=int(siteid))
+                print(page, '599')
+                return JsonResponse({"use": list(page)}, json_dumps_params={"default": mydefault})
+
+            return render(request,'projectapp/indent.html',{'sitedata':sitedata,'siteid':siteid,'nickname':nickname,'data':data})
+        else:
+            request.session['dizhi']='a'
+            return redirect('projectapp:login')
+    else:
+        return redirect('projectapp:index')
+
+
 
 def indentok(request):
-    uname=request.session.get('nickname')
+    uname=request.session.get('nickname1')
     print(uname,'594')
     if uname:
         """地址存入数据库"""
@@ -575,40 +635,58 @@ def indentok(request):
             # save()
             username.tindent_set.create( column_12=column_12,state=state,bumber=bumber,money=money,tradename=tradename,makeprice=makeprice)
             # print(re,'605')
-
     nickname = request.session.get('nickname1')
     return render(request,'projectapp/indent ok.html',{'nickname':nickname})
 def add(request):
     id=request.GET.get('id')
-    print(id,'588')
+    b=0
     data = request.session.get('shopca')
+    asum=0
     for i in data:
         if i['id']==id:
             bsum = int(i['bsum']) + 1
             sum = int(i['bdpri']) * int(bsum)
             print(bsum,sum,'123')
-
-    return JsonResponse({'bsum':bsum,'sum':sum})
+            i['bsum'] = bsum
+            i['sum'] = sum
+            data[b] = i
+            request.session['shopca'] = data
+        if i['bdpri']:
+            asum += int(i['bdpri']) * int(i['bsum'])
+        b+=1
+    return JsonResponse({'bsum':bsum,'sum':sum,'asum':asum})
     # return HttpResponse(123)
 def bdel(request):
     id = request.GET.get('id')
     print(id, '588')
+    b=0
     data = request.session.get('shopca')
+    asum=0
     for i in data:
         print(i['id'], type(i['id']))
         print(id, type(id))
         if i['id'] == id:
             bsum = int(i['bsum']) - 1
+            if bsum <1:
+                bsum=1
             sum = int(i['bdpri']) * int(bsum)
             print(bsum, sum, '123')
-    return JsonResponse({'bsum': bsum, 'sum': sum})
+            i['bsum'] = bsum
+            i['sum'] = sum
+            data[b] = i
+            request.session['shopca'] = data
+        if i['bdpri']:
+            asum += int(i['bdpri']) * int(i['bsum'])
+        b+=1
+    return JsonResponse({'bsum': bsum, 'sum': sum,'asum':asum})
 
 def carcheck(request):
     id=request.GET.get('id')
     num=request.GET.get('num')
-
     print(id,'588')
+    b=0
     data = request.session.get('shopca')
+    asum=0
     for i in data:
         print(i['id'],type(i['id']))
         print(id,type(id))
@@ -616,7 +694,15 @@ def carcheck(request):
             i['bsum'] =int(num)
             sum = int(i['bdpri']) * int(num)
             print(num,sum,'123')
-    return JsonResponse({'bsum':num,'sum':sum})
+            i['bsum'] = int(num)
+            i['sum'] = sum
+            data[b] = i
+            request.session['shopca'] = data
+        if i['bdpri']:
+            asum += int(i['bdpri']) * int(i['bsum'])
+        print(asum, '689',type(asum))
+        b+=1
+    return JsonResponse({'bsum':num,'sum':sum,'asum':asum})
 """随机获取字符串"""
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
@@ -624,10 +710,11 @@ def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
 
 def mail(request):
     a=request.GET.get('id')
-    print(a)
-    a1='17319366584@sina.cn'
+    print(a,'123')
+    # a1='17319366584@sina.cn'
     if a:
         ma=id_generator()
-        c=sendmail(ma,a1)
+        request.session['mobile']=ma
+        c=sendmail(ma,a)
         print(c)
     return HttpResponse(123)
