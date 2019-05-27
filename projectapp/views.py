@@ -39,18 +39,17 @@ def booklist(request):
     number=request.GET.get('number')
     anumber=request.GET.get('anumber')
     pnumber=request.GET.get('pnumber')
-    # print(pnumber,type(pnumber))
-    # print(anumber,number,'1919')
     nickname = request.session.get('nickname1')
     nickname2 = request.GET.get('nickname')
-    print(nickname2)
+    etwo = TwoClassify.objects.all()
+    eone = OneClassify.objects.all()
+    id11 = request.session.get('id1')
+    id22 = request.session.get('id2')
     if nickname2 == '1':
         print(nickname2, '2')
         nickname = ''
         """判断是否点击了上一页下一页"""
     if number:
-        id11= request.session.get('id1')
-        id22 = request.session.get('id2')
         """判断是属于一级还是二级分类页面"""
         if id22 != '':
             b = TwoClassify.objects.filter(id=id22)
@@ -58,8 +57,6 @@ def booklist(request):
             bid = b[0].id_classify.id
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             table = BTable.objects.filter(id_cla=id22)
             pagtor = Paginator(table, per_page=4)
             page = pagtor.page(number)
@@ -69,8 +66,6 @@ def booklist(request):
             bid = id11
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             li = []
             table1 = TwoClassify.objects.filter(id_classify=id11)
             for i in table1:
@@ -81,26 +76,16 @@ def booklist(request):
             asum = pagtor.num_pages
             return render(request, 'projectapp/booklist.html', {'asum':asum,'bid':bid,'aname':aname,"etwo": etwo, "eone": eone, 'li': li, 'id2': id2})
     elif anumber:
-        print('11111')
-        id11 = request.session.get('id1')
-        id22 = request.session.get('id2')
-        print(id11, id22, '232323')
         if id22 != '':
             b = TwoClassify.objects.filter(id=id22)
             bname = b[0].s_name
             bid = b[0].id_classify.id
-            print(id22, bid)
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            print('2222')
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             table = BTable.objects.filter(id_cla=id22)
             pagtor = Paginator(table, per_page=4)
             page = pagtor.page(anumber)
             asum = pagtor.num_pages
-            print(pagtor)
-            # psum = pagtor.num_pages
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'id2': id2, 'bid': bid, 'aname': aname, 'bname': bname, "etwo": etwo,
                            "eone": eone, 'page': page, 'id2': id2})
@@ -108,46 +93,31 @@ def booklist(request):
             bid = id11
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            print('33333')
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             li = []
             table1 = TwoClassify.objects.filter(id_classify=id11)
-            print(table1, '26')
             for i in table1:
                 ta = BTable.objects.filter(id_cla=i)
                 li.append(ta)
             pagtor = Paginator(li, per_page=2)
             li = pagtor.page(anumber)
             asum = pagtor.num_pages
-            # print(li,type(li))
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'bid': bid, 'aname': aname, "etwo": etwo, "eone": eone, 'li': li, 'id2': id2})
     elif pnumber == '2': #排序
-        print('11111')
-        id11 = request.session.get('id1')
-        id22 = request.session.get('id2')
-        print(id11, id22, '232323')
         if id22 != '':
             b = TwoClassify.objects.filter(id=id22)
             bname = b[0].s_name
             bid = b[0].id_classify.id
-            print(id22, bid)
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
             print('2222')
             if not number:
                 number=1
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             table = BTable.objects.filter(id_cla=id22).order_by("-d_pricing")
-            # table = BTable.objects.all().order_by("-d_pricing")
 
             pagtor = Paginator(table, per_page=4)
             page = pagtor.page(number)
             asum = pagtor.num_pages
-            print(pagtor)
-            # psum = pagtor.num_pages
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'id2': id2, 'bid': bid, 'aname': aname, 'bname': bname, "etwo": etwo,
                            "eone": eone, 'page': page, 'id2': id2})
@@ -157,9 +127,6 @@ def booklist(request):
             bid = id11
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            print('33333')
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             li = []
             table1 = TwoClassify.objects.filter(id_classify=id11)
 
@@ -170,32 +137,22 @@ def booklist(request):
             pagtor = Paginator(li, per_page=2)
             li = pagtor.page(number)
             asum = pagtor.num_pages
-            # print(li,type(li))
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'bid': bid, 'aname': aname, "etwo": etwo, "eone": eone, 'li': li, 'id2': id2})
     elif pnumber=='3':
-        print('1111122')
-        id11 = request.session.get('id1')
-        id22 = request.session.get('id2')
-        print(id11, id22, '232323')
         if id22 != '':
             b = TwoClassify.objects.filter(id=id22)
             bname = b[0].s_name
             bid = b[0].id_classify.id
-            print(id22, bid)
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
             print('2222')
             if not number:
                 number=1
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             table = BTable.objects.filter(id_cla=id22).order_by("d_pricing")
             pagtor = Paginator(table, per_page=4)
             page = pagtor.page(number)
             asum = pagtor.num_pages
-            print(pagtor)
-            # psum = pagtor.num_pages
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'id2': id2, 'bid': bid, 'aname': aname, 'bname': bname, "etwo": etwo,
                            "eone": eone, 'page': page, 'id2': id2})
@@ -205,9 +162,6 @@ def booklist(request):
             bid = id11
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            print('33333')
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             li = []
             table1 = TwoClassify.objects.filter(id_classify=id11)
             print(table1, '26')
@@ -217,32 +171,21 @@ def booklist(request):
             pagtor = Paginator(li, per_page=2)
             li = pagtor.page(number)
             asum = pagtor.num_pages
-            # print(li,type(li))
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'bid': bid, 'aname': aname, "etwo": etwo, "eone": eone, 'li': li, 'id2': id2})
     elif pnumber=='4':
-        print('11111')
-        id11 = request.session.get('id1')
-        id22 = request.session.get('id2')
-        print(id11, id22, '232323')
         if id22 != '':
             if not number:
                 number=1
             b = TwoClassify.objects.filter(id=id22)
             bname = b[0].s_name
             bid = b[0].id_classify.id
-            print(id22, bid)
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            print('2222')
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             table = BTable.objects.filter(id_cla=id22)
             pagtor = Paginator(table, per_page=4)
             page = pagtor.page(number)
             asum = pagtor.num_pages
-            print(pagtor)
-            # psum = pagtor.num_pages
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'id2': id2, 'bid': bid, 'aname': aname, 'bname': bname, "etwo": etwo,
                            "eone": eone, 'page': page, 'id2': id2})
@@ -252,44 +195,29 @@ def booklist(request):
             bid = id11
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            print('33333')
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             li = []
             table1 = TwoClassify.objects.filter(id_classify=id11)
-            print(table1, '26')
             for i in table1:
                 ta = BTable.objects.filter(id_cla=i)
                 li.append(ta)
             pagtor = Paginator(li, per_page=2)
             li = pagtor.page(number)
             asum = pagtor.num_pages
-            # print(li,type(li))
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'bid': bid, 'aname': aname, "etwo": etwo, "eone": eone, 'li': li, 'id2': id2})
     elif pnumber=='5':
-        print('11111')
-        id11 = request.session.get('id1')
-        id22 = request.session.get('id2')
-        print(id11, id22, '232323')
         if id22 != '':
             b = TwoClassify.objects.filter(id=id22)
             bname = b[0].s_name
             bid = b[0].id_classify.id
-            print(id22, bid)
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            print('2222')
             if not number:
                 number=1
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             table = BTable.objects.filter(id_cla=id22)
             pagtor = Paginator(table, per_page=4)
             page = pagtor.page(number)
             asum = pagtor.num_pages
-            print(pagtor)
-            # psum = pagtor.num_pages
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'id2': id2, 'bid': bid, 'aname': aname, 'bname': bname, "etwo": etwo,
                            "eone": eone, 'page': page, 'id2': id2})
@@ -299,67 +227,46 @@ def booklist(request):
             bid = id11
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            print('33333')
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             li = []
             table1 = TwoClassify.objects.filter(id_classify=id11)
-            print(table1, '26')
             for i in table1:
                 ta = BTable.objects.filter(id_cla=i)
                 li.append(ta)
             pagtor = Paginator(li, per_page=2)
             li = pagtor.page(number)
             asum = pagtor.num_pages
-            # print(li,type(li))
             return render(request, 'projectapp/booklist.html',
                           {'asum': asum, 'bid': bid, 'aname': aname, "etwo": etwo, "eone": eone, 'li': li, 'id2': id2})
 
     else:
-
-        print('4444')
         request.session['id1'] = id1
         if id2 !='':
             b = TwoClassify.objects.filter(id=id2)
             bname = b[0].s_name
             bid=b[0].id_classify.id
-            print(id2, bid)
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            # print(bid,aname,'6161')
             request.session['id2'] = id2
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
-            print(11111111111)
-            print(bname,'5858')
             if not number:
                 number=1
             table=BTable.objects.filter(id_cla=id2)
             pagtor = Paginator(table, per_page=4)
             page = pagtor.page(number)
-            print(pagtor)
             asum = pagtor.num_pages
-            print(asum,'848484',type(asum))
-        # psum = pagtor.num_pages
             return render(request, 'projectapp/booklist.html',{'nickname':nickname,'asum':asum,'bid':bid,'id2':id2,'aname':aname,'bname':bname,"etwo":etwo, "eone": eone,'page':page,'id2':id2})
         else:
             bid=id1
             a = OneClassify.objects.filter(id=bid)
             aname = a[0].z_name
-            print('55555')
-            etwo = TwoClassify.objects.all()
-            eone = OneClassify.objects.all()
             li=[]
             if not number:
                 number=1
             table1=TwoClassify.objects.filter(id_classify=id1)
-            print(table1,'26')
             for i in table1:
                 ta=BTable.objects.filter(id_cla=i)
                 li.append(ta)
             pagtor = Paginator(li, per_page=2)
             li = pagtor.page(number)
-             # print(li,type(li))
             asum = pagtor.num_pages
             return render(request, 'projectapp/booklist.html',{'nickname':nickname,'asum':asum,'aname':aname,'bid':bid,"etwo":etwo, "eone": eone,'li':li,'id2':id2})
 
@@ -367,22 +274,25 @@ def login(request):
     return render(request,'projectapp/login.html')
 
 def login1(request):
+    """登录逻辑处理"""
     txtPassword=request.POST.get('txtPassword')
     txtUsername=request.POST.get('txtUsername')
+
     print('379',txtUsername,txtPassword)
     fs=TUser.objects.get(nickname=txtUsername,password=txtPassword)
     aass=request.session.get('aass')
-    fs.aass=aass
+    fs.aass=aass  #保存邮箱验证状态
     fs.save()
-    # for i in fs:
-    #     aass=i.aass
-    #     print(aass,type(aass))
-    print(type(fs),aass,'375')
+    print(aass,type(aass),'285')
+    print(fs)
     dindent=request.session.get('dizhi')
-    print(dindent,'379')
-    if fs!='' and aass == '1' and dindent == 'a':
-        request.session['nickname']=txtUsername#登录成功存入状态
+    print(dindent)
+    if fs!='' and aass == '1' and dindent == 'a' : #从结算跳过来的
+        print('290')
+        request.session['nickname']=txtUsername  #登录成功存入状态
+        print('291')
         request.session['dizhi'] = ''
+        print('292')
         return redirect('projectapp:indent')
     elif fs!='' and aass=='1':
         print()
@@ -405,11 +315,6 @@ def index(request):
     etwo =TwoClassify.objects.all()
     eone=OneClassify.objects.all()
     etable=BTable.objects.order_by("pricing","-d_pricing")[0:10]
-    # aa=1
-    # for i in etable:
-    #     etable.create(column_9=aa)
-    #     aa+=1
-    #     print(i.column_9)
     return render(request, 'projectapp/index.html', {"nickname":nickname,"etwo":etwo, "eone": eone,'etable':etable})
 def addd(request):
     return render(request, 'projectapp/addEmp.html')
@@ -436,8 +341,10 @@ def register(request):
 
 def mobilem(request):
     mobile = request.GET.get('mobile')
+    email = request.GET.get('email')
     print(mobile, '417')
     mobile1 = request.session.get('mobile')
+    email1 = request.session.get('email1')
     print(mobile1,'438')
     if mobile == mobile1:
         request.session['aass'] = '1'
@@ -447,6 +354,7 @@ def mobilem(request):
         return HttpResponse('no')
 def register1(request):
     # mobile1 = request.session.get('mobile1')
+    email1 = request.session.get('email1')
     aass=request.session.get('aass')
     print(aass,'434')
     if aass!='1':
@@ -455,23 +363,26 @@ def register1(request):
     txt_username=request.POST.get('txt_username')
     username=request.POST.get('username')
     txt_repassword=request.POST.get('txt_repassword')
-    fs=TUser.objects.filter(email=txt_username)
-    if fs:
-        return HttpResponse('注册失败邮箱已存在！')
-
-    TUser.objects.create(email=txt_username,nickname=username,password=txt_repassword,aass=aass)
-    print(txt_repassword,username,txt_username,'425')
-    dindent = request.session.get('dizhi')
-    print(dindent, '379')
-    if aass == '1' and dindent == 'a':
-        request.session['nickname1'] = username  # 登录成功存入状态
-        request.session['dizhi'] = ''
-        print(username,aass)
-        return redirect('projectapp:indent')
-    elif aass!='1':
-        return redirect('projectapp:login')
-    request.session['nickname'] = username  # 登录成功存入状态
-    return redirect('projectapp:registerok')
+    if email1==txt_username:
+        fs=TUser.objects.filter(email=txt_username)
+        if fs:
+            return HttpResponse('注册失败邮箱已存在！')
+        TUser.objects.create(email=txt_username,nickname=username,password=txt_repassword,aass=aass)
+        print(txt_repassword,username,txt_username,'425')
+        dindent = request.session.get('dizhi')
+        print(dindent, '379')
+        if aass == '1' and dindent == 'a':
+            request.session['nickname1'] = username  # 登录成功存入状态
+            request.session['dizhi'] = ''
+            print(username,aass)
+            return redirect('projectapp:indent')
+        elif aass!='1':
+            request.session['nickname1'] = username  # 登录成功存入状态
+            return redirect('projectapp:login')
+        request.session['nickname'] = username  # 登录成功存入状态
+        return redirect('projectapp:registerok')
+    else:
+        return HttpResponse('请保证两次输入邮箱一致')
     # return render(request,'projectapp/register ok.html')
 
 def registerok(request):
@@ -577,7 +488,7 @@ def car(request):
                     aa= int(i['bdpri'])*int(i['bsum'])
                     i['bpri']=str(aa)
                     jsum+=(int(i['bpri'])*int(i['bsum'])-int(i['bdpri'])*int(i['bsum']))
-
+                    request.session['suma']=sum
             request.session['shopca'] = data
             b+=1
     request.session['shopca'] =data
@@ -585,7 +496,10 @@ def car(request):
 
 
 def indent(request):
-    nickname = request.session.get('nickname1')
+    suma=request.session.get('suma')
+
+    print('492')
+    nickname = request.session.get('nickname')
     data = request.session.get('shopca')
     siteid = request.GET.get('id')
     """jsonResponse转换"""
@@ -596,6 +510,7 @@ def indent(request):
     """判断是否点击了配送地址"""
     sitedata = TSite.objects.all()
     if data:
+        print('504')
         if nickname:
             if siteid=='a':
                 return HttpResponse('')
@@ -605,7 +520,7 @@ def indent(request):
                 print(page, '599')
                 return JsonResponse({"use": list(page)}, json_dumps_params={"default": mydefault})
 
-            return render(request,'projectapp/indent.html',{'sitedata':sitedata,'siteid':siteid,'nickname':nickname,'data':data})
+            return render(request,'projectapp/indent.html',{'suma':suma,'sitedata':sitedata,'siteid':siteid,'nickname':nickname,'data':data})
         else:
             request.session['dizhi']='a'
             return redirect('projectapp:login')
@@ -718,6 +633,7 @@ def carcheck(request):
 
 def mail(request):
     a=request.GET.get('id')
+    request.session['email1'] = a
     print(a,'123')
     # a1='17319366584@sina.cn'
     if a:
