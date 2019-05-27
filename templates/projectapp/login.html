@@ -58,7 +58,7 @@
 
                 <tr>
 
-                    <td class="t" style="font-size: 10px;color: #c30000"><input type="button" style="color: #1c90d4" onclick="mail()" value="获取邮箱验证"></td>
+                    <td class="t" style="font-size: 10px;color: #c30000"><input  type="button" style="color: #1c90d4" onclick="mail()" value="获取邮箱验证"></td>
                     <td>
                         <input onblur="mobile1()" name="mobile" id="txt_mobile" maxlength="11" tabindex="4" class="text" placeholder="注意：不验证第一次不能登录 " type="text"><span id="spn_mobile_ok" class="icon_yes" style="display: none;"></span>
                         <span id="J_mobile" class="cue warn"></span>
@@ -225,13 +225,13 @@
         function mobile1() {
         var txt_mobile=document.getElementById('txt_mobile').value
         J_mobile=document.getElementById('J_mobile')
-
+        var email=document.getElementById('txt_username').value
         console.log(txt_mobile)
          $.ajax({
             {#console.log(a)#}
             type:'get',
             url:"{% url 'projectapp:mobilem' %}",
-            data:{"mobile":txt_mobile},
+            data:{"mobile":txt_mobile,"email":email},
             success:function (msg) {
                 console.log(msg)
                 if (msg=='no'){

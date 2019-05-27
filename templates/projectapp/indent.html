@@ -157,7 +157,7 @@
                 <span id="spn_ship_man4" class="hint new_tip"  style="display: block; color: #c30000" ></span></li>
 
         </ul>
-        <div class="balance"><p>商品金额：¥60.30</p><p class="yfze">应付总额（含运费）：<em>¥60.30</em></p>
+        <div class="balance"><p>商品金额：¥{{ suma }}</p><p class="yfze">应付总额（含运费）：<em>¥{{ suma }}</em></p>
             <p><a id="ssmit" onclick="smit()" href="javascript:;" style="background: #c30000">提交订单</a></p></div>
     </div>
 
@@ -204,7 +204,7 @@
                 <span id="spn_ship_man4" class="hint new_tip"  style="display: block; color: #c30000" ></span></li>
 
                 </ul>
-                     <div class="balance"><p>商品金额：¥60.30</p><p class="yfze">应付总额（含运费）：<em>¥60.30</em></p>
+                     <div class="balance"><p>商品金额：¥{{ suma }}</p><p class="yfze">应付总额（含运费）：<em>¥{{ suma }}</em></p>
                            <p>
                 <input style="background:#c30000;width: 174px;height: 38px;line-height: 38px;display: block;font-size: 14px;color:#fff;margin: 10px auto;  " type="button" id="J_submitRegister"    onclick="smit()" value="提交订单">
 
@@ -237,7 +237,7 @@
                                 <td align="center">¥{{ datum.bdpri }}</td>
                                 <td align="center">--</td>
                                 <td align="center">{{ datum.bsum }}</td>
-                                <td align="center">¥368.40</td>
+                                <td align="center">¥{{ suma }}</td>
                                 <td align="center"><a href="#">放回购物车</a></td>
                             </tr>
                           {% endif %}
@@ -248,7 +248,7 @@
                      <tr>
                         <td colspan="2"><input type="checkbox" >此订单作为礼品赠送他人</td>
                         <td colspan="2"><strong>运费：</strong>当确认送货方式后显示</td>
-                        <td class="table_zj" colspan="3"><strong>小计总额：</strong><em>¥368.40</em></td>
+                        <td class="table_zj" colspan="3"><strong>小计总额：</strong><em>¥{{ suma }}</em></td>
                     </tr>
                 
             
